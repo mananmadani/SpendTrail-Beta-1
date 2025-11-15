@@ -731,3 +731,99 @@ body {
   color: #424242;
   margin-bottom: 0;
 }
+/* ============================================
+   SECURITY STYLES - Add to end of style.css
+   ============================================ */
+
+/* PIN Dots */
+.pin-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #E0E0E0;
+  transition: all 0.2s ease;
+}
+
+/* Numpad Grid */
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Numpad Buttons */
+.num-btn {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #FFFFFF;
+  border: 2px solid #E0E0E0;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1A1A1A;
+}
+
+.num-btn:active {
+  transform: scale(0.95);
+  background: #F5F5F5;
+}
+
+.num-btn:hover {
+  background: #F5F5F5;
+  border-color: #667EEA;
+}
+
+/* Lock Screen Container */
+.lock-screen {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Security Setup Container */
+.security-setup {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Shake Animation for Wrong PIN */
+@keyframes shake {
+  0%, 100% { 
+    transform: translateX(0); 
+  }
+  10%, 30%, 50%, 70%, 90% { 
+    transform: translateX(-10px); 
+  }
+  20%, 40%, 60%, 80% { 
+    transform: translateX(10px); 
+  }
+}
+
+/* Security Settings Styles */
+.security-settings {
+  padding: 0;
+}
+
+/* Responsive for Small Screens */
+@media (max-width: 360px) {
+  .numpad {
+    max-width: 240px;
+    gap: 8px;
+  }
+  
+  .num-btn {
+    font-size: 20px;
+  }
+  
+  .pin-dot {
+    width: 14px;
+    height: 14px;
+  }
+  }
