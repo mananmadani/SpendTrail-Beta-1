@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SpendTrail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <img src="SpendTrail.png" alt="SpendTrail Logo" class="logo">
+    <span class="app-title">SpendTrail</span>
+  </header>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+    
+    <!-- HOME TAB -->
+    <div id="tab-home" class="tab-content active">
+      <!-- Balance Card -->
+      <div class="card balance-card">
+        <div class="balance-label">Current Balance</div>
+        <div class="balance-amount" id="balance">₹0.00</div>
+        <div class="balance-trend" id="balance-trend">Track your finances</div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="summary-grid">
+        <div class="summary-card income-card">
+          <div class="summary-icon">↗</div>
+          <div class="summary-details">
+            <div class="summary-label">Income</div>
+            <div class="summary-value" id="total-income">₹0.00</div>
+          </div>
+        </div>
+        <div class="summary-card expense-card">
+          <div class="summary-icon">↘</div>
+          <div class="summary-details">
+            <div class="summary-label">Expense</div>
+            <div class="summary-value" id="total-expense">₹0.00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="section-header">Recent Transactions</div>
+      <div id="recent-list" class="transaction-list"></div>
+      
+      <div class="empty-state" id="empty-recent" style="display:none;">
+        <div class="empty-icon">📊</div>
+        <div class="empty-text">No transactions yet</div>
+        <div class="empty-subtext">Start tracking your finances</div>
+      </div>
+    </div>
+
+    <!-- ADD TAB -->
+    <div id="tab-add" class="tab-content">
+      <div class="add-tab-toggle">
+        <button class="toggle-btn active" data-type="expense" onclick="switchAddType('expense')">Expense</button>
+        <button class="toggle-btn" data-type="income" onclick="switchAddType('income')">Income</button>
+      </div>
+
+      <form id="add-form" class="add-form">
+        <div class="form-group">
+          <label>Amount</label>
+          <input type="number" id="add-amount" placeholder="0.00" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <input type="text" id="add-category" placeholder="e.g. Food, Salary" required list="category-list">
+          <datalist id="category-list"></datalist>
+        </div>
+
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="add-date" required>
+        </div>
+
+        <div class="form-group">
+          <label>Note (Optional)</label>
+          <input type="text" id="add-note" placeholder="Add a note">
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Add Expense</button>
+      </form>
+    </div>
+
+    <!-- INSIGHTS TAB -->
+    <div id="tab-insights" class="tab-content">
+      <div class="insights-menu">
+        <button class="insight-option" onclick="showAnalytics()">
+          <span class="option-icon">📊</span>
+          <span class="option-text">Analytics</span>
+          <span class="option-arrow">→</span>
+        </button>
+        <button class="insight-option" onclick="showAllEntries()">
+          <span class="option-icon">📋</span>
+          <span class="option-text">All Entries</span>
+          <span class="option-arrow">→</span>
+        </button>
+        <button class="insight-option" onclick="showLedger()">
+          <span class="option-icon">📁</span>
+          <span class="option-text">Ledger</span>
+          <span class="option-arrow">→</span>
+        </button>
+        <button class="insight-option" onclick="showStatements()">
+          <span class="option-icon">📅</span>
+          <span class="option-text">Custom Statement</span>
+          <span class="option-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MORE TAB -->
+    <div id="tab-more" class="tab-content">
+      <div class="more-menu">
+        <button class="more-option" onclick="backupData()">
+          <span class="option-icon">💾</span>
+          <span class="option-text">Backup Data</span>
+        </button>
+        <button class="more-option" onclick="encryptedBackup()">
+          <span class="option-icon">🔒</span>
+          <span class="option-text">Encrypted Backup</span>
+        </button>
+        <button class="more-option" onclick="restoreData()">
+          <span class="option-icon">📥</span>
+          <span class="option-text">Restore Data</span>
+        </button>
+        <button class="more-option" onclick="exportPDF()">
+          <span class="option-icon">📄</span>
+          <span class="option-text">Export PDF</span>
+        </button>
+        <button class="more-option danger" onclick="deleteAllData()">
+          <span class="option-icon">🗑️</span>
+          <span class="option-text">Delete All Data</span>
+        </button>
+        <button class="more-option" onclick="showPrivacy()">
+          <span class="option-icon">🔐</span>
+          <span class="option-text">Privacy Policy</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-btn" data-tab="add" onclick="switchTab('add')">
+      <span class="nav-icon">➕</span>
+      <span class="nav-label">Add</span>
+    </button>
+    <button class="nav-btn" data-tab="insights" onclick="switchTab('insights')">
+      <span class="nav-icon">📊</span>
+      <span class="nav-label">Insights</span>
+    </button>
+    <button class="nav-btn" data-tab="more" onclick="switchTab('more')">
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-label">More</span>
+    </button>
+  </nav>
+
+  <!-- Fullscreen Overlay -->
+  <div id="overlay" class="overlay">
+    <div class="overlay-header">
+      <button class="back-btn" onclick="closeOverlay()">← Back</button>
+      <h2 id="overlay-title">Title</h2>
+    </div>
+    <div id="overlay-content" class="overlay-content"></div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+  </html>

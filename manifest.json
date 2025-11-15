@@ -1,0 +1,17 @@
+{
+  "name": "SpendTrail",
+  "short_name": "SpendTrail",
+  "version": "3.3",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FAFAFA",
+  "description": "Modern expense and income tracker",
+  "icons": [
+    {
+      "src": "SpendTrail.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "theme_color": "#667EEA"
+}
